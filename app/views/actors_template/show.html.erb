@@ -1,0 +1,77 @@
+<h1> Actor #<%= @actor.id %> details </h1>
+
+
+<a href="/actors" class="btn btn-block btn-outline-secondary">
+  Go back
+</a>
+
+&nbsp;|&nbsp;
+
+<a href ='/delete_actors/<%= @actor.id %>' class='btn btn-block btn-outline-secondary'>
+  Delete actor
+</a>
+
+
+<dl>
+  <dt> Name </dt>
+  <dd> <%= @actor.name %> </dd>
+
+  <dt> Dob </dt>
+  <dd> <%= @actor.dob %> </dd>
+
+  <dt> Bio </dt>
+  <dd>
+    <%= @actor.bio %>
+  </dd>
+
+  <dt> Image </dt>
+  <dd>
+    <img src='http://robohash.org/<%= @actor.image %>' %>
+  </dd>
+
+  <dt> Created at </dt>
+  <dd> <%= time_ago_in_words(@actor.created_at) %> ago </dd>
+
+  <dt> Updated at </dt>
+  <dd> <%= time_ago_in_words(@actor.updated_at) %> ago </dd>
+</dl>
+
+
+
+<h2> Filmography </h2>
+<table border="1">
+<% @filmography.each do |actor| %>
+  <tbody>
+  <tr>
+    <th> Title </th>
+    <th> Year </th>
+    <th> Director </th>
+    <th> Character Name </th>
+    <th>
+    </th>
+  </tr>
+
+  <tr>
+    <td> <%= actor.title %> </td>
+
+    <td> <%= actor.year %> </td>
+
+    <td> 
+      <% d = Director.where({ :id => actor.director_id }).at(0) %>
+      <%= d.name %> 
+    </td>
+
+
+    <td>  
+      <% c = Character.where({ :id => actor.id }).at(0) %>
+      <%= c.name %> 
+    </td>
+
+    <td>
+      <a href="/movies/<%= actor.id%>">
+        Show details
+      </a>
+    </td>
+  </tr>
+
+<% end %>
